@@ -1,37 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chefalio Frontend
+
+Modern frontend for Chefalio — a marketplace where chefs publish recipes and sell cookbooks.
+
+Built with Next.js (App Router), TypeScript, React Query, Axios, and Framer Motion.
+
+---
+
+## Tech Stack
+
+| Layer        | Technology                         |
+| ------------ | ---------------------------------- |
+| Framework    | Next.js (App Router)               |
+| Language     | TypeScript                         |
+| Styling      | Tailwind CSS                       |
+| State / Data | React Query (TanStack Query)       |
+| API Client   | Axios                              |
+| Animations   | Framer Motion                      |
+| Auth         | JWT (httpOnly cookies via backend) |
+
+---
+
+## Features
+
+- Authentication (login / register / logout with cookies)
+- Chef dashboard for creating recipes & cookbooks
+- Browse & search recipes with filters
+- Save / like recipes
+- Purchase cookbooks (Stripe integration)
+- Role-based UI (user / chef / admin)
+- Smooth UI animations via Framer Motion
+- Optimized data fetching with React Query
+
+---
 
 ## Getting Started
 
-First, run the development server:
+**1. Clone & install**
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/Irfanulamin/chefalio-client.git
+cd chefalio-client
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**2. Configure environment**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cp .env.example .env
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5000
+```
 
-## Learn More
+**3. Run dev server**
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+App runs at `http://localhost:3000`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+app/
+├── (admin)/            # Admin dashboard routes
+├── (authenticated)/    # Protected user routes
+├── (chef)/             # Chef dashboard
+├── (guest)/            # Public pages (landing, auth)
+├── (user)/             # User dashboard
+├── page.tsx
+├── layout.tsx
+└── globals.css
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-"# chefalio-client" 
+components/
+├── ui/                 # Reusable UI components
+└── common/             # Navbar, Footer, etc.
+
+hooks/
+├── useAuth.ts
+├── useRecipes.ts
+└── useCookbooks.ts
+
+lib/
+├── axios.ts            # Axios instance
+└── react-query.ts      # Query client setup
+
+types/
+public/
+```
+
+---
+
+## API Integration
+
+All requests use the Axios instance pointed at `NEXT_PUBLIC_API_URL`.
+
+React Query handles caching, background refetches, loading states, and mutations (create recipe, purchase, etc.).
+
+---
+
+## Roles & Access
+
+| Role  | Access                                     |
+| ----- | ------------------------------------------ |
+| user  | Browse, save, purchase cookbooks           |
+| chef  | Create recipes & cookbooks, manage content |
+| admin | Full system control & analytics            |
+
+---
+
+## Scripts
+
+```bash
+pnpm dev        # Start dev server
+pnpm build      # Production build
+pnpm start      # Start production server
+pnpm lint       # ESLint check
+```
